@@ -1,0 +1,2 @@
+# LegalTech
+LegalTech Hackathon Project
