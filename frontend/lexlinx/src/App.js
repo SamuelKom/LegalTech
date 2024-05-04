@@ -7,9 +7,7 @@ function App() {
       <div className="Header">
         Ein LegalTech Hackathon Projekt für Aktualitätsprüfung von Literaturverzeichnissen.
       </div>
-      <div className="Input-Container">
         <AutoTextarea/>
-      </div>
     </div>
   );
 }

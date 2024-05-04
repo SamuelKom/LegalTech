@@ -1,11 +1,27 @@
 .App {
   text-align: center;
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(10px + 2vmin); /* Responsive font size */
   color: white;
+  padding: 20px; /* Add padding for a better spacing on all sides */
+  box-sizing: border-box; /* Include padding in the width and height calculations */
+}
+
+@media (max-width: 768px) {
+  .App {
+    padding: 10px; /* Less padding on smaller devices */
+    font-size: calc(9px + 2vmin); /* Slightly smaller font size for smaller devices */
+  }
+}
+
+.Header {
+  max-width: 90vw; /* Limit the maximum width to improve readability */
+  padding: 20px; /* Padding for better text separation */
+  margin-bottom: 20px; /* Space below the header */
+  background-color: rgba(255, 255, 255, 0.1); /* Slight background for emphasis */
+  border-radius: 10px; /* Rounded corners for aesthetic */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import './Input.css';
 
 function AutoresizingTextarea() {
   const [text, setText] = useState('');
@@ -14,21 +15,41 @@ function AutoresizingTextarea() {
     setText(event.target.value);
   }
 
+  function handleSubmit(event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+    console.log(text)
+    // fetch('https://yourapi.com/endpoint', { // Your API endpoint URL
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({ content: text })
+    // })
+    // .then(response => response.json())
+    // .then(data => {
+    //   console.log('Success:', data);
+    //   // Handle success here, e.g., showing a confirmation message
+    // })
+    // .catch((error) => {
+    //   console.error('Error:', error);
+    //   // Handle errors here, e.g., showing an error message
+    // });
+  }
+
   return (
-    <textarea
-      ref={textareaRef}
-      value={text}
-      onChange={handleChange}
-      autoFocus
-      placeholder='Literaturverzeichnis einfügen...'
-      style={{
-        minHeight: '15rem',
-        width: '50rem',
-        maxHeight: '30rem',
-        overflow: 'auto',
-        resize: 'none'
-      }}
-    />
+    <form onSubmit={handleSubmit}>
+        <div className='Input-Container'>
+            <textarea
+            ref={textareaRef}
+            value={text}
+            onChange={handleChange}
+            autoFocus
+            placeholder='Literaturverzeichnis einfügen...'
+            className='Input'
+            />
+        </div>
+        <input type='submit' value='Suchen' className='Submit-Button'/>
+    </form>
   );
 }
 
