@@ -7,7 +7,7 @@ CORS(app)
 @app.route('/check', methods=['POST'])
 def check():
     print(request)
-    bibliography = request.args.get('bibliography')
+    bibliography = request.get_json().get('bibliography')
 
     if bibliography:
         print(bibliography)
