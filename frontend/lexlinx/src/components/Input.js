@@ -10,8 +10,8 @@ function AutoresizingTextarea() {
   useEffect(() => {
     if (!loading) {
       const textarea = textareaRef.current;
-      textarea.style.height = 'auto';
-      textarea.style.height = `${textarea.scrollHeight}px`;
+      // textarea.style.height = 'auto';
+      // textarea.style.height = `${textarea.scrollHeight}px`;
     }
   }, [text, loading]);
 
@@ -48,7 +48,7 @@ function AutoresizingTextarea() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <input type='submit' value='Suchen' className='Submit-Button' disabled={loading}/>
+        <input type='submit' value='Überprüfen' className='Submit-Button' disabled={loading}/>
         <div className='Input-Container'>
           <textarea
             ref={textareaRef}
