@@ -18,6 +18,7 @@ class Parser:
         #nltk.download('averaged_perceptron_tagger')
         #nltk.download('maxent_ne_chunker')
         #nltk.download('words')
+
         #self.nlp = spacy.load("en_core_web_sm")
         self.nlp = spacy.load("de_core_news_sm")
 
@@ -45,29 +46,14 @@ class Parser:
         return [1, False]
     
     def __get_authors(self, book) -> List[str]:
-        #tokens = nltk.word_tokenize(book)
-        #tagged = nltk.pos_tag(tokens)
-        #entities = nltk.chunk.ne_chunk(tagged)
-        #print(entities)
-        #tokens = word_tokenize(book)
-        #tagged = pos_tag(tokens)
-        #named_entities = ne_chunk(tagged)
-        #names = []
-        #for entity in named_entities:
-        #    if hasattr(entity, 'label') and entity.label() == 'PERSON':
-        #        names.append(' '.join([token for token, tag in entity]))
-        #print(names)
-        #for word in book.split(" "):
         url_pattern = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
         w = url_pattern.sub('', book)
-        w = re.sub("[^A-Za-z0-9 ]+", "", w)#.split()
-        #random.shuffle(w)
-        #w = ' '.join(w)
+        w = re.sub("[^A-Za-z0-9 ]+", "", w)
 
         doc = self.nlp(w)
+        
         lst = []
         for ent in doc.ents:
-            #print(ent.text, ent.label_)
             if(ent.label_ == "PER"):
                 for i in ent.text.split():
                     if i not in lst:
@@ -82,7 +68,7 @@ class Parser:
         w = re.sub("[^A-Za-z0-9 " + delimiter + "]+", "", w)
         res = [{"string": w, "len": len(w)} for w in w.split(delimiter)]
         res = sorted(res, key=lambda x: x['len'], reverse=True)
-        return res[0]["string"] #+ " " + res[1]["string"]
+        return res[0]["string"]
     
     def __get_year(self, book):
         raise NotImplementedError
