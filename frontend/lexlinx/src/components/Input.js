@@ -3,22 +3,27 @@ import './Input.css';
 
 function AutoresizingTextarea() {
   const [text, setText] = useState('');
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
   const textareaRef = useRef(null);
 
   useEffect(() => {
-    const textarea = textareaRef.current;
-    textarea.style.height = 'auto';  // Reset the height
-    textarea.style.height = `${textarea.scrollHeight}px`; // Adjust the height based on the content
-  }, [text]);  // Effect runs when text changes
+    if (!loading) {
+      const textarea = textareaRef.current;
+      textarea.style.height = 'auto';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  }, [text, loading]);
 
   function handleChange(event) {
     setText(event.target.value);
   }
 
   function handleSubmit(event) {
-    event.preventDefault(); // Prevent the default form submission behavior
-    console.log(text)
-    // fetch('https://yourapi.com/endpoint', { // Your API endpoint URL
+    event.preventDefault();
+    setLoading(true);
+    // Simulated API call
+    // fetch('https://yourapi.com/endpoint', {
     //   method: 'POST',
     //   headers: {
     //     'Content-Type': 'application/json'
@@ -27,29 +32,41 @@ function AutoresizingTextarea() {
     // })
     // .then(response => response.json())
     // .then(data => {
-    //   console.log('Success:', data);
-    //   // Handle success here, e.g., showing a confirmation message
+    //   setData(data);
+    //   setLoading(false);
+    //   setText('');
     // })
     // .catch((error) => {
     //   console.error('Error:', error);
-    //   // Handle errors here, e.g., showing an error message
+    //   setLoading(false);
     // });
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input type='submit' value='Suchen' className='Submit-Button' disabled={loading}/>
         <div className='Input-Container'>
-            <textarea
+          <textarea
             ref={textareaRef}
             value={text}
             onChange={handleChange}
             autoFocus
             placeholder='Literaturverzeichnis einfügen...'
             className='Input'
-            />
+            disabled={loading}
+          />
         </div>
-        <input type='submit' value='Suchen' className='Submit-Button'/>
-    </form>
+      </form>
+      {loading && <div className="Loading-Indicator">Loading...</div>}
+      {data && <div>
+        {data.map((item, index) => (
+          <div key={index}>
+            <p>{item.title}</p>
+          </div>
+        ))}
+      </div>}
+    </div>
   );
 }
 

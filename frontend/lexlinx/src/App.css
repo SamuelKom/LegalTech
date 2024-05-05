@@ -18,10 +18,37 @@
 }
 
 .Header {
+  display: flex;
+  flex-direction: column;
   max-width: 90vw; /* Limit the maximum width to improve readability */
   padding: 20px; /* Padding for better text separation */
-  margin-bottom: 20px; /* Space below the header */
   background-color: rgba(255, 255, 255, 0.1); /* Slight background for emphasis */
   border-radius: 10px; /* Rounded corners for aesthetic */
   box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
+
+.Brand {
+  font-size: 5rem;
+  font-variant: small-caps;
+  font-family: Bahnschrift, cursive;
+  margin-bottom: 1rem;
+}
+
+.Footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 3rem;
+  width: 100%;
+  background-color: black;
+  color: white;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+a {
+  text-decoration: none;
+  color: white;
 }
