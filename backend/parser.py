@@ -1,9 +1,7 @@
 from typing import List
 import re
-import nltk
-from nltk.tokenize import word_tokenize
-from nltk.tag import pos_tag
-from nltk.chunk import ne_chunk
+import requests
+import json
 import numpy
 import spacy
 import random
@@ -11,71 +9,56 @@ from copy import deepcopy
 
 from backend.structure import ParseInfo
 
+#curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-474.0.0-linux-x86_64.tar.gz
+#tar -xf google-cloud-cli-474.0.0-linux-x86_64.tar.gz
+#./google-cloud-sdk/install.sh
+#./google-cloud-sdk/bin/gcloud init
+#./google-cloud-sdk/bin/gcloud components install gsutil bq
+#sudo snap install google-cloud-sdk
+
 class Parser:
     def __init__(self) -> None:
-        #nltk.download('popular')
-        #nltk.download('punkt')
-        #nltk.download('averaged_perceptron_tagger')
-        #nltk.download('maxent_ne_chunker')
-        #nltk.download('words')
-
-        #self.nlp = spacy.load("en_core_web_sm")
-        self.nlp = spacy.load("de_core_news_sm")
+        self.project_id = "elite-coral-422320-q3"
+        self.url = "https://us-central1-aiplatform.googleapis.com/v1/projects/" + self.project_id + "/locations/us-central1/publishers/google/models/text-bison:predict"
+        self.basic_request = "extract author, title and year from: "
+        self.token = "ya29.a0AXooCgv8l_67cQRCvlpS65PkC6SL_S0h45zM7wr-0C0uYEJbQaznHdP6rwX1Lyf9kQgmEFo7nwLSHa3C1paP16oNAlbjHghmmtDJ6SRLv-FLUNFApqdyFEw2WeI-6ZL2UMMnOiNXw-pGMP3kgG4as9e8DuNrOXLcSwC1WwzMIQaCgYKAVASARISFQHGX2Mi8uCK8e50ymQGtH18eWyrDA0177"
 
     def split_sources(self, msg: str) -> List[str]:
         raise NotImplementedError
     
-    def __get_delimiter(self, book: str, delimiters: List[str]) -> str:
-        res = {}
-        for keys in book:
-            res[keys] = res.get(keys, 0) + 1
-        delimiter_counts = {delimiter: res.get(delimiter, 0) for delimiter in delimiters}
-        delimiter_char = max(delimiter_counts, key=delimiter_counts.get)
-        print("delimiter: " + delimiter_char)
-        return delimiter_char
-    
-    def __get_volume(self, book: str, delimiter: str) -> List:
-        key_words = ["Auflage", "Volume"]
-        for part in book.split(delimiter):
-            for key in key_words:
-                if key in part:
-                    volume = re.findall(r'\d+', part)
-                    if(len(volume) > 1):
-                        raise ValueError("only one volume number possible")
-                    return [int(volume[0]), True]
-        return [1, False]
-    
-    def __get_authors(self, book) -> List[str]:
-        url_pattern = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
-        w = url_pattern.sub('', book)
-        w = re.sub("[^A-Za-z0-9 ]+", "", w)
+    def __send_request(self, book) -> dict:
+        json_data = json.dumps({
+            "instances": [
+                { 
+                    "prompt": self.basic_request + book
+                }
+            ],
+            "parameters": {
+                "temperature": 1,
+                "maxOutputTokens": 1024,
+                "topP": 1
+            }
+        })
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {self.token}"
+        }
+        response = requests.post(self.url, data=json_data, headers=headers)
+        print("Status Code:", response.status_code)
+        print("Response:", response.json())
+        return response.json()
 
-        doc = self.nlp(w)
-        
-        lst = []
-        for ent in doc.ents:
-            if(ent.label_ == "PER"):
-                for i in ent.text.split():
-                    if i not in lst:
-                        lst.append(i)
-        return lst
-
-    def __get_title(self, book, delimiter, authors) -> str:
-        w = deepcopy(book)
-        for name in authors:
-            w = w.replace(name, "")
-        w = ' '.join(w.split()).strip()
-        w = re.sub("[^A-Za-z0-9 " + delimiter + "]+", "", w)
-        res = [{"string": w, "len": len(w)} for w in w.split(delimiter)]
-        res = sorted(res, key=lambda x: x['len'], reverse=True)
-        return res[0]["string"]
-    
-    def __get_year(self, book):
-        raise NotImplementedError
     
     def get_data_obj(self, book: str, delimiters: List[str]) -> ParseInfo:
-        delimiter = self.__get_delimiter(book, delimiters)
-        volume, found_volume = self.__get_volume(book, delimiter)
-        authors = self.__get_authors(book)
-        title = self.__get_title(book, delimiter, authors)
-        return ParseInfo(title, authors, 999, volume, found_volume)
+        response = self.__send_request(book)
+        response = response["predictions"][0]["content"]
+        for attribute in response.split("\n"):
+            attribute_cleaned = attribute.strip()
+            if attribute_cleaned.startswith('Title:'):
+                title_value = attribute_cleaned.split(':', 1)[1].strip()
+            elif attribute_cleaned.startswith('Year:'):
+                year_value = attribute_cleaned.split(':', 1)[1].strip()
+            if attribute.strip().startswith('Author:'):
+                author_value = attribute.split(':', 1)[1].strip()
+        print(response)
+        return ParseInfo(title=title_value, author=author_value, year=int(year_value))
