@@ -77,3 +77,30 @@
     100% { transform: rotate(360deg); }
   }
   
+  .Data-Table {
+    width: 100%;
+    margin: 20px auto;
+    border-collapse: collapse;
+  }
+  
+  .Data-Row {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center; /* Centering the content */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease-in-out;
+  }
+  
+  .Data-Row:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+  
+  .Data-Cell {
+    padding: 20px; /* Increased padding for better spacing */
+    display: block; /* Keeping block for a full-width cell */
+    text-align: center; /* Center the text for better aesthetics */
+    width: 100%; /* Full width to utilize space */
+  }
+  

@@ -58,14 +58,16 @@ function AutoresizingTextarea() {
           />
         </div>
       </form>
-      {loading && <div className="Loading-Indicator">Loading...</div>}
-      {data && <div>
-        {data.map((item, index) => (
-          <div key={index}>
-            <p>{item.title}</p>
-          </div>
-        ))}
-      </div>}
+      {loading && <div className='Loading-Indicator'>Loading...</div>}
+      {data && (
+        <div className='Data-Table'>
+          {data.map((item, index) => (
+            <div key={index} className='Data-Row'>
+              <div className='Data-Cell'>{item}</div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
