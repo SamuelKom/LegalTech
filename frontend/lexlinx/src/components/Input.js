@@ -23,23 +23,19 @@ function AutoresizingTextarea() {
     event.preventDefault();
     setLoading(true);
     // Simulated API call
-    // fetch('https://yourapi.com/endpoint', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({ content: text })
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //   setData(data);
-    //   setLoading(false);
-    //   setText('');
-    // })
-    // .catch((error) => {
-    //   console.error('Error:', error);
-    //   setLoading(false);
-    // });
+    fetch('http://127.0.0.1:5000/check', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({text}),
+    }).then(response => response.json())
+    .then(data => {
+      console.log(data);
+    }).catch((error) => {
+      console.error('Error:', error);
+      setLoading(false);
+    });
   }
 
   return (

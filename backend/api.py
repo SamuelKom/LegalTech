@@ -1,50 +1,21 @@
-import requests
-import os
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
-#from dotenv import load_dotenv
+app = Flask(__name__)
+CORS(app)
 
-#load_dotenv('.env') 
+@app.route('/check', methods=['POST'])
+def check():
+    print(request)
+    bibliography = request.args.get('bibliography')
 
-#ISBN_DB_API_KEY = os.environ.get('ISBN_DB_API_KEY')
-
-GOOGLE_BOOKS_URL = "https://www.googleapis.com/books/v1/volumes"
-#ISBN_DB_API_URL = "https://api2.isbndb.com/books/"
-
-def get_book_google(author, title, year):
-    #payload = {'column': 'title'}
-    #headers = {'Authorization': 'application/json'}
-    params = {
-        "q": f'intitle:"{title}"+inauthor:"{author}"'
-    }
-    response = requests.get(GOOGLE_BOOKS_URL, params=params)
-
-    if response.status_code == 200:
-        data = response.json()
-
-        newestVersionYear = year
-        for book in data['items']:
-            if 'volumeInfo' in book:
-                volumeInfo = book['volumeInfo']
-                if 'title' in volumeInfo and 'publishedDate' in volumeInfo and 'authors' in volumeInfo:
-                    #print(book['volumeInfo']['title'] + ", " + book['volumeInfo']['publishedDate'], end=', ')
-                    #print(volumeInfo['authors'])
-                    volumeYear = volumeInfo['publishedDate'].split("-")[0]
-                    #print(volumeYear)
-                    if volumeYear > newestVersionYear:
-                        newestVersionYear = volumeYear
-                #else:
-                #    print("title, date or author empty")
-                
-                #if 'subtitle' in book['volumeInfo']:
-                #    print(": " + book['volumeInfo']['title'], end='')
-                #print()
-        #print(response)
-        if newestVersionYear > year:
-            print(f"Es wurde eine neuere Version von {title} aus dem Jahr {newestVersionYear} gefunden")
-        else:
-            print(f"Es wurde keine neuere Version von {title} gefunden")
+    if bibliography:
+        print(bibliography)
+        #parser
+        #google api
+        return jsonify({'received_text': bibliography}), 200
     else:
-        print('Fehler beim GET-Request:', response.status_code)
+        return jsonify({'error': 'Parameter is missing'}), 400
 
-
-get_book_google("Detterbeck Steffen", "Öffentliches Recht", "2014")
+if __name__ == '__main__':
+    app.run(debug=True)
