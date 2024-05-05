@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
 .App {
   text-align: center;
   min-height: 100vh;
@@ -20,18 +21,18 @@
 .Header {
   display: flex;
   flex-direction: column;
-  max-width: 90vw; /* Limit the maximum width to improve readability */
-  padding: 20px; /* Padding for better text separation */
-  background-color: rgba(255, 255, 255, 0.1); /* Slight background for emphasis */
-  border-radius: 10px; /* Rounded corners for aesthetic */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+  max-width: 70vw; /* Limit the maximum width to improve readability */
+  padding: 10px; /* Padding for better text separation */
+  background-color: rgb(255, 255, 255); /* Slight background for emphasis */
 }
 
 .Brand {
-  font-size: 5rem;
-  font-variant: small-caps;
-  font-family: Bahnschrift, cursive;
-  margin-bottom: 1rem;
+  font-size: 3rem;
+  /* font-family: arial; */
+  color: rgb(86, 134, 202);
+  max-width: 100%;
+  font-weight: 900;
+  /* margin-bottom: 1rem; */
 }
 
 .Footer {
@@ -40,8 +41,7 @@
   bottom: 0;
   height: 3rem;
   width: 100%;
-  background-color: black;
-  color: white;
+  background-color: white;
   text-align: center;
   display: flex;
   align-items: center;
@@ -50,5 +50,22 @@
 
 a {
   text-decoration: none;
-  color: white;
+  color: rgb(117, 115, 115);
+  /* font-family: arial; */
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;  /* Defines two columns of equal width */
+  grid-gap: 10px;  /* Optional: Add spacing between grid items */
+  width: 100%;
+}
+
+.grid-item1 {
+  background-color: #ffffff;  /* Optional: Set background color for boxes */
+  padding: 10px;  /* Optional: Add padding to boxes */
+}
+
+.grid-item2 {
+  
 }

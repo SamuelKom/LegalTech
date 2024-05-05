@@ -5,10 +5,19 @@ function App() {
   return (
     <div className='App'>
       <div className='Header'>
-        <div className='Brand'>Bibdate</div>
-        Ein LegalTech Hackathon Projekt für Aktualitätsprüfung von Literaturverzeichnissen.
+        <div className='Brand'>Ref Reviser</div>
       </div>
-      <AutoTextarea/>
+      <div className="grid-container">
+
+      <div className="grid-item1"> <AutoTextarea/> </div>
+
+      <div className="grid-item2">
+        <div className="Output-Container">
+          <div className="Output"></div>
+        </div>
+      </div>
+
+      </div>
       <div className='Footer'>
         <a href='#'>Impressum</a>
       </div>
