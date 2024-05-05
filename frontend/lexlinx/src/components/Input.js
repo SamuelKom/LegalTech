@@ -31,7 +31,14 @@ function AutoresizingTextarea() {
       body: JSON.stringify({ bibliography : text }),
     }).then(response => response.json())
     .then(data => {
-      console.log(data);
+      //console.log(data);
+      document.getElementById('output').innerHTML = "";
+      data['response'].forEach((item) => {
+        var p = document.createElement('p');
+        p.innerHTML = item['book'] + ": " + item['result'];
+        document.getElementById('output').appendChild(p);
+      })
+      setLoading(false);
     }).catch((error) => {
       console.error('Error:', error);
       setLoading(false);

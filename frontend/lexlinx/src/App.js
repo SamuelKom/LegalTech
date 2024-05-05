@@ -12,6 +12,8 @@ function App() {
       <div className='Footer'>
         <a href='#'>Impressum</a>
       </div>
+      <div id="output">
+      </div>
     </div>
   );
 }

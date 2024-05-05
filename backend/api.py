@@ -12,15 +12,18 @@ parser = Parser()
 def check():
     print(request)
     bibliography = request.get_json().get('bibliography')
+    response = {"response": []};
 
     if bibliography:
         booklines = bibliography.splitlines()
         for book in booklines:
-            parserinfo = parser.get_data_obj(book, [",", "/", ";"])
-            get_book_google(parserinfo.authors, parserinfo.title, parserinfo.year)
-
-        #google api
-        return jsonify({'received_text': bibliography}), 200
+            try:
+                parserinfo = parser.get_data_obj(book, [",", "/", ";"])
+                result = get_book_google(parserinfo.author, parserinfo.title, int(parserinfo.year))
+            except:
+                result = "keine gültige quelle"
+            response['response'].append({ 'book': book, 'result': result});
+        return response, 200
     else:
         return jsonify({'error': 'Parameter is missing'}), 400
 

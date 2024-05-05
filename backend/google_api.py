@@ -10,11 +10,11 @@ import os
 GOOGLE_BOOKS_URL = "https://www.googleapis.com/books/v1/volumes"
 #ISBN_DB_API_URL = "https://api2.isbndb.com/books/"
 
-def get_book_google(author, title, year):
+def get_book_google(author, title, year: int):
     #payload = {'column': 'title'}
     #headers = {'Authorization': 'application/json'}
     params = {
-        "q": f'intitle:"{title}"+inauthor:"{author}"'
+        "q": f'intitle:{title} inauthor:{author}'
     }
     response = requests.get(GOOGLE_BOOKS_URL, params=params)
 
@@ -23,28 +23,21 @@ def get_book_google(author, title, year):
 
         newestVersionYear = year
         for book in data['items']:
+            print(f"{author}, {title}")
             if 'volumeInfo' in book:
                 volumeInfo = book['volumeInfo']
                 if 'title' in volumeInfo and 'publishedDate' in volumeInfo and 'authors' in volumeInfo:
-                    #print(book['volumeInfo']['title'] + ", " + book['volumeInfo']['publishedDate'], end=', ')
-                    #print(volumeInfo['authors'])
-                    volumeYear = volumeInfo['publishedDate'].split("-")[0]
-                    #print(volumeYear)
+                    volumeYear = int(volumeInfo['publishedDate'].split("-")[0])
+                    print(volumeYear, ", ", newestVersionYear)
+
                     if volumeYear > newestVersionYear:
                         newestVersionYear = volumeYear
-                #else:
-                #    print("title, date or author empty")
-                
-                #if 'subtitle' in book['volumeInfo']:
-                #    print(": " + book['volumeInfo']['title'], end='')
-                #print()
-        #print(response)
         if newestVersionYear > year:
-            print(f"Es wurde eine neuere Version von {title} aus dem Jahr {newestVersionYear} gefunden")
+            return (f"Es wurde eine neuere Version gefunden")
         else:
-            print(f"Es wurde keine neuere Version von {title} gefunden")
+            return (f"Es wurde keine neuere Version gefunden")
     else:
         print('Fehler beim GET-Request:', response.status_code)
 
 
-get_book_google("Detterbeck Steffen", "Öffentliches Recht", "2014")
+#get_book_google("Detterbeck Steffen", "Öffentliches Recht", "2014")

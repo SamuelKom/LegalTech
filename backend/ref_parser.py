@@ -21,7 +21,7 @@ class Parser:
         self.project_id = "elite-coral-422320-q3"
         self.url = "https://us-central1-aiplatform.googleapis.com/v1/projects/" + self.project_id + "/locations/us-central1/publishers/google/models/text-bison:predict"
         self.basic_request = "extract author, title and year from: "
-        self.token = "ya29.a0AXooCgv8l_67cQRCvlpS65PkC6SL_S0h45zM7wr-0C0uYEJbQaznHdP6rwX1Lyf9kQgmEFo7nwLSHa3C1paP16oNAlbjHghmmtDJ6SRLv-FLUNFApqdyFEw2WeI-6ZL2UMMnOiNXw-pGMP3kgG4as9e8DuNrOXLcSwC1WwzMIQaCgYKAVASARISFQHGX2Mi8uCK8e50ymQGtH18eWyrDA0177"
+        self.token = "ya29.a0AXooCgvF_Qmd-5R9O6rmbZM4lNJLu8dlP6NVkIp5igjujv0T3HfwRoKaFEGSzb1r-VN5P5qbKhzoDdcxJZjdc5EG7t4wGJ54vzONtyT7G_kucCNez_uZPQ4Qg0vNqFwjSSy96l00Qx5-SdEqBJk5FM4KyQ6s-Bo9PY79ih1octEaCgYKAckSARISFQHGX2MiuOMLN5cNmh6NJZ3MJSajmw0178"
 
     def split_sources(self, msg: str) -> List[str]:
         raise NotImplementedError
@@ -44,21 +44,24 @@ class Parser:
             "Authorization": f"Bearer {self.token}"
         }
         response = requests.post(self.url, data=json_data, headers=headers)
-        print("Status Code:", response.status_code)
-        print("Response:", response.json())
+        #print("Status Code:", response.status_code)
+        #print("Response:", response.json())
         return response.json()
 
     
     def get_data_obj(self, book: str, delimiters: List[str]) -> ParseInfo:
         response = self.__send_request(book)
         response = response["predictions"][0]["content"]
+        #title_value = ""
+        #year_value = 0
+        #author_value = ""
         for attribute in response.split("\n"):
             attribute_cleaned = attribute.strip()
+            #print(response)
             if attribute_cleaned.startswith('Title:'):
                 title_value = attribute_cleaned.split(':', 1)[1].strip()
             elif attribute_cleaned.startswith('Year:'):
                 year_value = attribute_cleaned.split(':', 1)[1].strip()
             if attribute.strip().startswith('Author:'):
                 author_value = attribute.split(':', 1)[1].strip()
-        print(response)
         return ParseInfo(title=title_value, author=author_value, year=int(year_value))
