@@ -1,4 +1,6 @@
 Flask
 python-dotenv
 nltk
-flask_cors 
+flask_cors
+spacy
+requests

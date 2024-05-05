@@ -1,17 +1,24 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
+from ref_parser import Parser
+from google_api import get_book_google
+
 app = Flask(__name__)
 CORS(app)
+parser = Parser()
 
 @app.route('/check', methods=['POST'])
 def check():
     print(request)
-    bibliography = request.args.get('bibliography')
+    bibliography = request.get_json().get('bibliography')
 
     if bibliography:
-        print(bibliography)
-        #parser
+        booklines = bibliography.splitlines()
+        for book in booklines:
+            parserinfo = parser.get_data_obj(book, [",", "/", ";"])
+            get_book_google(parserinfo.authors, parserinfo.title, parserinfo.year)
+
         #google api
         return jsonify({'received_text': bibliography}), 200
     else:

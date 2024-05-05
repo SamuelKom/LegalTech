@@ -28,7 +28,7 @@ function AutoresizingTextarea() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({text}),
+      body: JSON.stringify({ bibliography : text }),
     }).then(response => response.json())
     .then(data => {
       console.log(data);
