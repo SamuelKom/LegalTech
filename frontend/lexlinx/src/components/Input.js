@@ -32,11 +32,11 @@ function AutoresizingTextarea() {
     }).then(response => response.json())
     .then(data => {
       //console.log(data);
-      document.getElementById('output').innerHTML = "";
+      document.getElementsByClassName('Output')[0].innerHTML = "";
       data['response'].forEach((item) => {
         var p = document.createElement('p');
         p.innerHTML = item['book'] + ": " + item['result'];
-        document.getElementById('output').appendChild(p);
+        document.getElementsByClassName('Output')[0].appendChild(p);
       })
       setLoading(false);
     }).catch((error) => {
