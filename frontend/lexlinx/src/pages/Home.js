@@ -41,20 +41,20 @@ function Home() {
   }
   
 
-  function getResultStyle(result) {
-    if (result === 'outdated') {
-      return { backgroundColor: 'red', color: 'white' };
-    } else if (result === 'current') {
-      return { backgroundColor: 'green', color: 'white' };
+  function getResultStyle(code) {
+    if (code === 1) {
+      return { backgroundColor: 'red', color: 'black' };
+    } else if (code === 2) {
+      return { backgroundColor: 'green', color: 'black' };
     } else {
-      return { backgroundColor: 'gray', color: 'white' };
+      return { backgroundColor: 'blue', color: 'black' };
     }
   }
 
   return (
     <div className='App'>
       <div className='Header'>
-        <div className='Brand'>Ref Reviser</div>
+        <div className='Brand'>Ref Reviser<img src="logo.png" alt="logo"/></div>
       </div>
       <div className="grid-container">
         <div className="grid-item1">
@@ -89,7 +89,7 @@ function Home() {
         {data && (
           <div>
             {data.map((item, index) => (
-              <p key={index} style={getResultStyle(item.result)}>
+              <p key={index} style={getResultStyle(item.code)}>
                 {item.book}: {item.result}
               </p>
             ))}
