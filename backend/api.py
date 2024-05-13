@@ -20,9 +20,14 @@ def check():
             try:
                 parserinfo = parser.get_data_obj(book, [",", "/", ";"])
                 result = get_book_google(parserinfo.author, parserinfo.title, int(parserinfo.year))
+                if result == 'Es wurde eine neuere Version gefunden':
+                    code = 1
+                else:
+                    code = 2
             except:
-                result = "Ist kein Buch"
-            response['response'].append({ 'book': book, 'result': result});
+                result = "keine gültige quelle"
+                code = 3
+            response['response'].append({ 'book': book, 'result': result, 'code': code});
         return response, 200
     else:
         return jsonify({'error': 'Parameter is missing'}), 400

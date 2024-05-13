@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
+.App {
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: calc(10px + 2vmin); /* Responsive font size */
+  color: white;
+  padding: 20px; /* Add padding for a better spacing on all sides */
+  box-sizing: border-box; /* Include padding in the width and height calculations */
+}
+
+@media (max-width: 768px) {
+  .App {
+    padding: 10px; /* Less padding on smaller devices */
+    font-size: calc(9px + 2vmin); /* Slightly smaller font size for smaller devices */
+  }
+}
+
+.Header {
+  display: flex;
+  flex-direction: column;
+  max-width: 70vw; /* Limit the maximum width to improve readability */
+  padding: 10px; /* Padding for better text separation */
+  background-color: rgb(255, 255, 255); /* Slight background for emphasis */
+}
+
+.Brand {
+  font-size: 3rem;
+  /* font-family: arial; */
+  color: rgb(86, 134, 202);
+  max-width: 100%;
+  font-weight: 900;
+  /* margin-bottom: 1rem; */
+}
+
+.Brand img {
+  width: 50px;
+  margin: 0 1rem -0.5rem 1rem;
+}
+
+.Footer {
+  position: fixed;
+  bottom: 0;
+  height: 3rem;
+  width: 100%;
+  background-color: white;
+  color: rgb(117, 115, 115);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 24px;
+}
+
+.Footer a {
+  text-decoration: none;
+  color: rgb(117, 115, 115);
+  padding: 0 1rem;
+  /* font-family: arial; */
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+p {
+    padding: 0 1rem;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;  /* Defines two columns of equal width */
+  grid-gap: 10px;  /* Optional: Add spacing between grid items */
+  width: 100%;
+}
+
+.grid-item1 {
+  background-color: #ffffff;  /* Optional: Set background color for boxes */
+  padding: 10px;  /* Optional: Add padding to boxes */
+}
+
+.grid-item2 {
+  
+}
+
+.Input-Container {
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: #ccc;
+    opacity: 0.5;
+    margin: 1rem auto; /* Centers the container and adds margin around it */
+    width: 90%;
+    height: 100%;
+     /* Ensures padding and border are included in the width calculation */
+}
+
+.Output-Container {
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: #ccc;
+    opacity: 0.5;
+    margin-top: 5rem; /* Centers the container and adds margin around it */
+    width: 90%;
+    height: 80%;
+}
+
+.Output {
+    width: 100%;
+    height: 100%; /* Take full width of its container */
+    min-height: 36rem; /* Minimum height */
+    max-height: 150rem; /* Maximum height before scrolling */
+    overflow: auto; /* Allows for scrolling when content overflows */
+    border: none; /* No border */
+    background-color: transparent; /* Transparent background */
+    outline: none; /* No focus outline */
+    resize: none; /* Disable resizing */
+    box-sizing: border-box;
+}
+
+.Input {
+    width: 100%;
+    height: 100%; /* Take full width of its container */
+    min-height: 36rem; /* Minimum height */
+    max-height: 150rem; /* Maximum height before scrolling */
+    overflow: auto; /* Allows for scrolling when content overflows */
+    border: none; /* No border */
+    background-color: transparent; /* Transparent background */
+    outline: none; /* No focus outline */
+    resize: none; /* Disable resizing */
+    box-sizing: border-box;     
+    font-family: inherit;
+}
+
+.Submit-Button {
+    width: 50%; /* Full width to match the textarea container */
+    padding: 10px;
+    margin-top: 1rem; /* Space between the textarea and button */
+    border-radius: 0.5rem; /* Rounded corners for the button */
+    background-color: rgb(86, 134, 202);
+    font-size: 16px; /* Fixed font size for readability */
+    border: none;
+    cursor: pointer; /* Pointer cursor on hover */
+    font-family: inherit;
+    font-weight: 900;
+}
+
+.Submit-Button:hover {
+    background-color: #bedcfe; /* Change color on hover */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+    .Input-Container {
+        padding: 0.5rem; /* Reduce padding on smaller screens */
+        max-width: 100%; /* Allow full width use on very small devices */
+    }
+    .Submit-Button {
+        padding: 0.5rem; /* Reduce button padding */
+        font-size: 14px; /* Slightly smaller font size on smaller devices */
+    }
+}
+
+.Loading-Indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    z-index: 10;
+    color: black;
+  }
+  
+  .Loading-Indicator::before {
+    content: '';
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  

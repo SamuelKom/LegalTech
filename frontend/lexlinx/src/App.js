@@ -1,29 +1,18 @@
-import './App.css';
-import AutoTextarea from './components/Input';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Impressum from './pages/Impressum';
+import Home from './pages/Home';
+import Datenschutz from './pages/Datenschutz';
+
 
 function App() {
   return (
-    <div className='App'>
-      <div className='Header'>
-        <div className='Brand'>Ref Reviser</div>
-      </div>
-      <div className="grid-container">
-
-      <div className="grid-item1"> <AutoTextarea/> </div>
-
-      <div className="grid-item2">
-        <div className="Output-Container">
-          <div className="Output"></div>
-        </div>
-      </div>
-
-      </div>
-      <div className='Footer'>
-        <a href='#'>Impressum</a>
-      </div>
-      <div id="output">
-      </div>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/impressum" element={<Impressum />} />
+        <Route path="/datenschutz" element={<Datenschutz />} />
+      </Routes>
+    </Router>
   );
 }
 
