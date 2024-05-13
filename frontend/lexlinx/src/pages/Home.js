@@ -43,11 +43,11 @@ function Home() {
 
   function getResultStyle(code) {
     if (code === 1) {
-      return { backgroundColor: 'red', color: 'black' };
+      return { backgroundColor: 'red', color: 'white' };
     } else if (code === 2) {
-      return { backgroundColor: 'green', color: 'black' };
+      return { backgroundColor: 'green', color: 'white' };
     } else {
-      return { backgroundColor: 'blue', color: 'black' };
+      return { backgroundColor: 'blue', color: 'white' };
     }
   }
 
