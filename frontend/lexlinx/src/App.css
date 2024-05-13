@@ -69,3 +69,9 @@ a {
 .grid-item2 {
   
 }
+
+p {
+  color: green;
+  font-family: inherit;
+  font-size: 15px
+}

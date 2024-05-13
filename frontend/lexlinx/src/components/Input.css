@@ -31,6 +31,7 @@
     outline: none; /* No focus outline */
     resize: none; /* Disable resizing */
     box-sizing: border-box;
+    font-family: inherit;
 }
 
 .Input {

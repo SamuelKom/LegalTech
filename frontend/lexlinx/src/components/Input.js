@@ -35,6 +35,7 @@ function AutoresizingTextarea() {
       document.getElementsByClassName('Output')[0].innerHTML = "";
       data['response'].forEach((item) => {
         var p = document.createElement('p');
+        p.id = "output"; // Set the id property of the p element
         p.innerHTML = item['book'] + ": " + item['result'];
         document.getElementsByClassName('Output')[0].appendChild(p);
       })

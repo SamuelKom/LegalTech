@@ -21,7 +21,7 @@ class Parser:
         self.project_id = "elite-coral-422320-q3"
         self.url = "https://us-central1-aiplatform.googleapis.com/v1/projects/" + self.project_id + "/locations/us-central1/publishers/google/models/text-bison:predict"
         self.basic_request = "extract author, title and year from: "
-        self.token = "ya29.a0AXooCgvF_Qmd-5R9O6rmbZM4lNJLu8dlP6NVkIp5igjujv0T3HfwRoKaFEGSzb1r-VN5P5qbKhzoDdcxJZjdc5EG7t4wGJ54vzONtyT7G_kucCNez_uZPQ4Qg0vNqFwjSSy96l00Qx5-SdEqBJk5FM4KyQ6s-Bo9PY79ih1octEaCgYKAckSARISFQHGX2MiuOMLN5cNmh6NJZ3MJSajmw0178"
+        self.token = "ya29.a0AXooCgs5im7bT1KLbP6n-wDS8v6RHruAb2H9AiDKB-V7BeL_a_4116pXJg0eOVPPwD8ZGxvSWZ0FeLl2xn7bN8sPIOcC9r05XsjkFXsQ2mY77Ww2ntG1F60uqVma7dcJodQ0-eYZ4kn7xDdq1eBjN5Aph-_DWoR0VvOZMpaVa7AaCgYKAWASARISFQHGX2Miij0QhXTEo3Cm1vxSoljarA0178"
 
     def split_sources(self, msg: str) -> List[str]:
         raise NotImplementedError

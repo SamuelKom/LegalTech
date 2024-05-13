@@ -21,7 +21,7 @@ def check():
                 parserinfo = parser.get_data_obj(book, [",", "/", ";"])
                 result = get_book_google(parserinfo.author, parserinfo.title, int(parserinfo.year))
             except:
-                result = "keine gültige quelle"
+                result = "Ist kein Buch"
             response['response'].append({ 'book': book, 'result': result});
         return response, 200
     else:
