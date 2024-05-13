@@ -18,7 +18,7 @@ def check():
         booklines = bibliography.splitlines()
         for book in booklines:
             try:
-                parserinfo = parser.get_data_obj(book, [",", "/", ";"])
+                parserinfo = parser.get_data_obj(book)
                 result = get_book_google(parserinfo.author, parserinfo.title, int(parserinfo.year))
                 if result == 'Es wurde eine neuere Version gefunden':
                     code = 1
@@ -27,7 +27,7 @@ def check():
             except:
                 result = "keine gültige quelle"
                 code = 3
-            response['response'].append({ 'book': book, 'result': result, 'code': code});
+            response['response'].append({'book': book, 'result': result, 'code': code});
         return response, 200
     else:
         return jsonify({'error': 'Parameter is missing'}), 400
