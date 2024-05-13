@@ -25,7 +25,7 @@ def check():
                 else:
                     code = 2
             except:
-                result = "keine gültige quelle"
+                result = "Ist kein buch"
                 code = 3
             response['response'].append({ 'book': book, 'result': result, 'code': code});
         return response, 200
